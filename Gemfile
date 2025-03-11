@@ -31,6 +31,7 @@ gem 'sassc-rails'
  gem "pg"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
+# e757eb00c6eb1b806f1e968c2a319eec
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
