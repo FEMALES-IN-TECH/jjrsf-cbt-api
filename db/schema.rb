@@ -10,11 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_11_111715) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_11_123252) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "clacbt_users", force: :cascade do |t|
+  create_table "cla_cbt_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cla_cbt_question_id", null: false
+    t.string "option", limit: 1, null: false
+    t.text "answer_text", null: false
+    t.boolean "correct", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cla_cbt_question_id"], name: "index_cla_cbt_answers_on_cla_cbt_question_id"
+  end
+
+  create_table "cla_cbt_candidates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cla_cbt_exam_id", null: false
+    t.string "email", null: false
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cla_cbt_exam_id"], name: "index_cla_cbt_candidates_on_cla_cbt_exam_id"
+    t.index ["email"], name: "index_cla_cbt_candidates_on_email", unique: true
+  end
+
+  create_table "cla_cbt_exams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "clacbt_user_id", null: false
+    t.string "name", null: false
+    t.integer "duration", null: false
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.string "exam_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clacbt_user_id"], name: "index_cla_cbt_exams_on_clacbt_user_id"
+    t.index ["exam_code"], name: "index_cla_cbt_exams_on_exam_code", unique: true
+  end
+
+  create_table "cla_cbt_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cla_cbt_exam_id", null: false
+    t.text "question", null: false
+    t.integer "mark", default: 10, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cla_cbt_exam_id"], name: "index_cla_cbt_questions_on_cla_cbt_exam_id"
+  end
+
+  create_table "clacbt_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -23,4 +66,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_11_111715) do
     t.index ["email"], name: "index_clacbt_users_on_email", unique: true
   end
 
+  add_foreign_key "cla_cbt_answers", "cla_cbt_questions"
+  add_foreign_key "cla_cbt_candidates", "cla_cbt_exams"
+  add_foreign_key "cla_cbt_exams", "clacbt_users"
+  add_foreign_key "cla_cbt_questions", "cla_cbt_exams"
 end

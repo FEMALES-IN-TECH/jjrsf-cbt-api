@@ -8,9 +8,12 @@ class CreateClaCbtExams < ActiveRecord::Migration[7.1]
       t.integer :duration, null: false  # Duration in minutes
       t.datetime :start_time, null: false
       t.datetime :end_time, null: false
+      t.string :exam_code, null: false
 
       t.timestamps
     end
+
+    add_index :cla_cbt_exams, :exam_code, unique: true
   end
 
   def down
