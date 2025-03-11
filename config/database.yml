@@ -21,6 +21,7 @@ default: &default
   host: localhost
   username: 'geekelo'
   password: 'geekelo'
+  prepared_statements: false
 
 development:
   <<: *default
@@ -86,3 +87,4 @@ production:
   database: jjrsf-cbt-api_production
   username: jrsf-cbt-api
   password: <%= ENV["JJRSF_CBT_API_DATABASE_PASSWORD"] %>
+  prepared_statements: false
