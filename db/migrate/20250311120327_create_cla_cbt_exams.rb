@@ -1,0 +1,19 @@
+class CreateClaCbtExams < ActiveRecord::Migration[7.1]
+  def up
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto') # Ensures UUID support for PostgreSQL
+
+    create_table :cla_cbt_exams, id: :uuid do |t|
+      t.references :clacbt_user, null: false, foreign_key: true, type: :uuid
+      t.string :name, null: false
+      t.integer :duration, null: false  # Duration in minutes
+      t.datetime :start_time, null: false
+      t.datetime :end_time, null: false
+
+      t.timestamps
+    end
+  end
+
+  def down
+    drop_table :cla_cbt_exams
+  end
+end

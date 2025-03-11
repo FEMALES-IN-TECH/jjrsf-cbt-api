@@ -1,6 +1,8 @@
 class CreateClacbtUsers < ActiveRecord::Migration[7.1]
   def up
-    create_table :clacbt_users do |t|
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+
+    create_table :clacbt_users, id: :uuid do |t|
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
