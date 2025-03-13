@@ -1,9 +1,14 @@
 class Api::V1::ClacbtExamsController < ApplicationController
-  skip_before_action :authenticate_token!, raise: false, only: [:display_exam]
+  skip_before_action :authenticate_token!, only: [:display_exam]
+  before_action :authenticate_token!
 
   def index
-    render json: current_user.clacbt_exams  # Fetch exams for the current user
-  end
+    if current_user.present?
+      render json: current_user.clacbt_exams
+    else
+      render json: { error: "Unauthorized" }, status: :unauthorized
+    end
+  end  
 
   def show
     exam = current_user.clacbt_exams.find(params[:id])  # Ensure user can only view their exams
@@ -35,11 +40,13 @@ class Api::V1::ClacbtExamsController < ApplicationController
   end
 
   def display_exam
-    exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by!(exam_code: params[:exam_code])
-    render json: exam, serializer: ClacbtExamSerializer
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Exam not found" }, status: :not_found
-  end  
+    exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by(exam_code: params[:exam_code])
+    if exam
+      render json: exam, serializer: ClacbtExamSerializer
+    else
+      render json: { error: "Exam not found" }, status: :not_found
+    end
+  end 
 
   private
 
