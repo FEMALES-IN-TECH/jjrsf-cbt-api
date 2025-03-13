@@ -1,4 +1,4 @@
-class ClacbtCheckCandidates < ApplicationController
+class Api::V1::ClacbtCheckCandidates < ApplicationController
   # Publicly display a candidate
   def check_candidate
     ActiveRecord::Base.connection.clear_cache! # Clear cache to ensure latest data is fetched
