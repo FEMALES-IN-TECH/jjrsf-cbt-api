@@ -41,13 +41,21 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
 
   # Publicly display a candidate
   def check_candidate
-    ActiveRecord::Base.connection.clear_cache!  # Clear cache to ensure latest data is fetched
-    exam = ClacbtExam.find_by!(exam_code: params[:exam_code])
+    ActiveRecord::Base.connection.clear_cache! # Clear cache to ensure latest data is fetched
   
-    candidate = exam.clacbt_candidates.find_by(email: params[:email], score: nil)
+    # Ensure exam_code is provided
+    unless params[:exam_code].present?
+      return render json: { error: "Exam code is required" }, status: :bad_request
+    end
   
-    if candidate
-      # Candidate is authorized, return exam code and email
+    # Find exam safely
+    exam = ClacbtExam.find_by(exam_code: params[:exam_code])
+    return render json: { error: "Exam not found" }, status: :not_found unless exam
+  
+    # Find candidate (ignoring case for email)
+    candidate = exam.clacbt_candidates.find_by("LOWER(email) = ?", params[:email].to_s.downcase)
+  
+    if candidate&.score.nil?
       render json: { 
         message: "Candidate authorized", 
         candidate: {
@@ -57,13 +65,10 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
         } 
       }, status: :ok
     else
-      # Unauthorized if no matching candidate is found
       render json: { error: "Unauthorized candidate" }, status: :unauthorized
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Exam not found" }, status: :not_found
   end
-
+  
   private
 
   def set_exam
