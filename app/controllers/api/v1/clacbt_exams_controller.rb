@@ -44,7 +44,7 @@ class Api::V1::ClacbtExamsController < ApplicationController
     render json: exam, include: { clacbt_questions: { include: :clacbt_answers } }
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Exam not found" }, status: :not_found
-  end    
+  end   
 
   private
 
