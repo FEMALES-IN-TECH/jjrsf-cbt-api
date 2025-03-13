@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       post "/login", to: "authentication#create"
 
       # Exam routes
-      resources :clacbt_exams, except: [:new, :edit] do
+      resources :clacbt_exams, except: [:create, :new, :edit] do
         resources :clacbt_questions, except: [:new, :edit]  # Nested under exams
         resources :clacbt_candidates, except: [:new, :edit] # Nested under exams
         collection do
