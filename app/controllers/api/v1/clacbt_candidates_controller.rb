@@ -1,6 +1,6 @@
 class Api::V1::ClacbtCandidatesController < ApplicationController
-  before_action :authenticate_token!, except: [:check_candidate]
-  skip_before_action :authenticate_token!, only: :update
+  before_action :authenticate_token!
+  skip_before_action :authenticate_token!, only: [:update, :check_candidate]
   before_action :set_exam, only: [:index, :create]
   before_action :set_candidate, only: [:show, :update, :destroy]
 
