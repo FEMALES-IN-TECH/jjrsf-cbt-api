@@ -12,8 +12,11 @@ Rails.application.routes.draw do
       resources :clacbt_exams, except: [:new, :edit] do
         resources :clacbt_questions, except: [:new, :edit]  # Nested under exams
         resources :clacbt_candidates, except: [:new, :edit] # Nested under exams
+      end
+
+      resources :clacbt_exams, only: [:index, :show, :create, :update, :destroy] do
         collection do
-          get 'display_exam'
+          get 'display_exam'  # Route for displaying an exam without authentication
         end
       end
 
