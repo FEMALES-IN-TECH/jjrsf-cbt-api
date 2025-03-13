@@ -41,10 +41,33 @@ class Api::V1::ClacbtExamsController < ApplicationController
 
   def display_exam
     exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by!(exam_code: params[:exam_code])
-    render json: exam, include: { clacbt_questions: { include: :clacbt_answers } }
+  
+    render json: {
+      id: exam.id,
+      name: exam.name,
+      duration: exam.duration,
+      start_time: exam.start_time,
+      end_time: exam.end_time,
+      exam_code: exam.exam_code,
+      clacbt_questions: exam.clacbt_questions.map do |question|
+        {
+          id: question.id,
+          question: question.question,
+          mark: question.mark,
+          clacbt_answers: question.clacbt_answers.map do |answer|
+            {
+              id: answer.id,
+              option: answer.option,
+              answer_text: answer.answer_text,
+              correct: answer.correct
+            }
+          end
+        }
+      end
+    }
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Exam not found" }, status: :not_found
-  end   
+  end    
 
   private
 
