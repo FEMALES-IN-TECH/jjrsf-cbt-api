@@ -31,8 +31,9 @@ Rails.application.routes.draw do
       end
       get "clacbt_answers/:id/display", to: "clacbt_answers#display_answer", as: "display_clacbt_answer"
 
-      # Candidate check route (for authentication)
+      # config/routes.rb
       get "clacbt_candidates/check", to: "clacbt_candidates#check_candidate", as: "check_clacbt_candidate"
+
     end
   end
 end
