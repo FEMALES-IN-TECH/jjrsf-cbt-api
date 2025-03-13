@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       get "clacbt_answers/:id/display", to: "clacbt_answers#display_answer", as: "display_clacbt_answer"
 
       # config/routes.rb
-      get "clacbt_candidates/check", to: "clacbt_check_candidates#check_candidate", as: "check_clacbt_candidate"
+      get 'clacbt_check_candidates/check', to: 'clacbt_check_candidates#check_candidate'
 
     end
   end
