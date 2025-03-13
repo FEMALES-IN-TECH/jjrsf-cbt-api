@@ -42,18 +42,18 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
   # Publicly display a candidate
   def check_candidate
     ActiveRecord::Base.connection.clear_cache!  # Clear cache to ensure latest data is fetched
-    @exam = ClacbtExam.find_by!(exam_code: params[:exam_code])
+    exam = ClacbtExam.find_by!(exam_code: params[:exam_code])
   
-    @candidate = @exam.clacbt_candidates.find_by(email: params[:email], score: nil)
+    candidate = exam.clacbt_candidates.find_by(email: params[:email], score: nil)
   
-    if @candidate
+    if candidate
       # Candidate is authorized, return exam code and email
       render json: { 
         message: "Candidate authorized", 
         candidate: {
-          id: @candidate.id,
-          email: @candidate.email, 
-          exam_code: @exam.exam_code 
+          id: candidate.id,
+          email: candidate.email, 
+          exam_code: exam.exam_code 
         } 
       }, status: :ok
     else
