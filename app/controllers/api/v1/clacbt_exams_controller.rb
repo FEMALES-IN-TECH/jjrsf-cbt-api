@@ -40,13 +40,11 @@ class Api::V1::ClacbtExamsController < ApplicationController
   end
 
   def display_exam
-    exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by(exam_code: params[:exam_code])
-    if exam
-      render json: exam, serializer: ClacbtExamSerializer
-    else
-      render json: { error: "Exam not found" }, status: :not_found
-    end
-  end 
+    exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by!(exam_code: params[:exam_code])
+    render json: exam, include: { clacbt_questions: { include: :clacbt_answers } }
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Exam not found" }, status: :not_found
+  end    
 
   private
 
