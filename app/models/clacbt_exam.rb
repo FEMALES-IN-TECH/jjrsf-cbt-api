@@ -15,7 +15,7 @@ class ClacbtExam < ActiveRecord::Base
   def generate_exam_code
     self.exam_code ||= loop do
       random_code = SecureRandom.alphanumeric(6).downcase
-      break random_code unless ClaCbtExam.exists?(exam_code: random_code)
+      break random_code unless ClacbtExam.exists?(exam_code: random_code)
     end
   end
 end
