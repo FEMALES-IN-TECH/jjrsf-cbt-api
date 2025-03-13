@@ -26,6 +26,7 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
   # Update candidate (Only exam owner can update)
   def update
     if @candidate.update(candidate_params)
+      CandidateMailer.candidate_updated(@candidate).deliver_now
       render json: @candidate, status: :ok
     else
       render json: @candidate.errors, status: :unprocessable_entity

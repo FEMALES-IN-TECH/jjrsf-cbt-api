@@ -17,6 +17,9 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :clacbt_candidates, only: [:index, :show, :create, :update, :destroy]
+
+
       resources :clacbt_exams, only: [:index, :show, :create, :update, :destroy]
 
       # Question routes

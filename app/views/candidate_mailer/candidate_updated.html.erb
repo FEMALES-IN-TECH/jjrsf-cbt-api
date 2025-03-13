@@ -1,0 +1,10 @@
+<p>Hello <%= @candidate.email %>,</p>
+
+<p>Your results for the exam <strong><%= @exam.name %></strong> are now available.</p>
+
+<p><strong>Exam Name:</strong> <%= @exam.name %></p>
+<p><strong>Your Email:</strong> <%= @candidate.email %></p>
+<p><strong>Your Score:</strong> <%= @candidate.score || "Not available yet" %></p>
+
+<p>Best regards,</p>
+<p>Your Exam Team</p>
