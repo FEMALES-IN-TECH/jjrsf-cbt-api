@@ -42,7 +42,7 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
 
   # Publicly display a candidate
   def check_candidate
-    ActiveRecord::Base.connection.clear_cache! # Clear cache to ensure latest data is fetched
+    # ActiveRecord::Base.connection.clear_cache! # Clear cache to ensure latest data is fetched
   
     # Ensure exam_code is provided
     unless params[:exam_code].present?
