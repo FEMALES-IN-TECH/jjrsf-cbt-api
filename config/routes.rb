@@ -12,9 +12,10 @@ Rails.application.routes.draw do
       resources :clacbt_exams, except: [:new, :edit] do
         resources :clacbt_questions, except: [:new, :edit]  # Nested under exams
         resources :clacbt_candidates, except: [:new, :edit] # Nested under exams
+        collection do
+          get 'display_exam'
+        end
       end
-
-      get "clacbt_exams/display", to: "clacbt_exams#display_exam", as: "display_clacbt_exam"
 
       # Question routes
       get "clacbt_questions/display/:id", to: "clacbt_questions#display_question", as: "display_clacbt_question"
