@@ -1,5 +1,4 @@
 class Api::V1::ClacbtExamsController < ApplicationController
-  skip_before_action :authenticate_token!, only: [:display_exam]
   before_action :authenticate_token!
 
   def index
@@ -40,6 +39,7 @@ class Api::V1::ClacbtExamsController < ApplicationController
   end
 
   def display_exam
+    skip_before_action :authenticate_token!, only: :display_exam
     exam = ClacbtExam.includes(clacbt_questions: :clacbt_answers).find_by(exam_code: params[:exam_code])
     if exam
       render json: exam, serializer: ClacbtExamSerializer
