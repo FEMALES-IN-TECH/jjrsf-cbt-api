@@ -56,6 +56,6 @@ class Api::V1::ClacbtQuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:clacbt_question).permit(:question, :option_a, :option_b, :option_c, :option_d, :answer)
+    params.require(:clacbt_question).permit(:question, :mark)
   end
 end
