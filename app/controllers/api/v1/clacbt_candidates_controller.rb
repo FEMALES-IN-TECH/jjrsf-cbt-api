@@ -49,7 +49,8 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
       # Candidate is authorized, return exam code and email
       render json: { 
         message: "Candidate authorized", 
-        candidate: { 
+        candidate: {
+          id: @candidate.id,
           email: @candidate.email, 
           exam_code: @exam.exam_code 
         } 
