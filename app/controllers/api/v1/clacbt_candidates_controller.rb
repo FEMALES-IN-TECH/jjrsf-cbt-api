@@ -3,6 +3,7 @@ class Api::V1::ClacbtCandidatesController < ApplicationController
   # skip_before_action :authenticate_token!, only: [:check_candidate, :update]
   before_action :set_exam, only: [:index, :create]
   before_action :set_candidate, only: [:show, :update, :destroy]
+  before_action :set_candidate, except: [:check_candidate]  
 
   # Fetch candidates for a specific exam (Only exam owner can view)
   def index
