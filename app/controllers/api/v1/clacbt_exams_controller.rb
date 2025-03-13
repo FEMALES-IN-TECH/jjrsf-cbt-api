@@ -1,5 +1,5 @@
 class Api::V1::ClacbtExamsController < ApplicationController
-  skip_before_action :authenticate_token!, only: [:display_exam]
+  skip_before_action :authenticate_token!, raise: false, only: [:display_exam]
 
   def index
     render json: current_user.clacbt_exams  # Fetch exams for the current user
