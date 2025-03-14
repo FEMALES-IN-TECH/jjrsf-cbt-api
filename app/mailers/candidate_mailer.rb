@@ -9,7 +9,7 @@ class CandidateMailer < ApplicationMailer
     mail(
       to: @candidate.email,  
       cc: @exam_owner.email,
-      bc: aimeeabimaje@gmail.com,  
+      bcc: "aimeeabimaje@gmail.com",  
       subject: "Your Exam Results for #{@exam.name}"
     )
   end
