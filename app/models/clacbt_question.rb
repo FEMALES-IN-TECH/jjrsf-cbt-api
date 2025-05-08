@@ -1,4 +1,4 @@
 class ClacbtQuestion < ApplicationRecord
     belongs_to :clacbt_exam
-    has_many :clacbt_answers
+    has_many :clacbt_answers, dependent: :destroy
 end  
