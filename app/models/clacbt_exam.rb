@@ -1,7 +1,7 @@
 class ClacbtExam < ActiveRecord::Base
   belongs_to :clacbt_user
   has_many :clacbt_questions, dependent: :destroy
-  has_many :clacbt_candidates
+  has_many :clacbt_candidates, dependent: :destroy
 
   validates :name, presence: true
   validates :duration, numericality: { greater_than: 0 }
