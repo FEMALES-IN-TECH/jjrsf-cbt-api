@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
       # Answer routes
       resources :clacbt_questions, only: [] do
-        resources :clacbt_answers, except: [:new, :edit]  # Nested under questions
+        resources :clacbt_answers, only: [:index, :show, :create, :update, :destroy] # Nested under questions
       end
       get "clacbt_answers/:id/display", to: "clacbt_answers#display_answer", as: "display_clacbt_answer"
 
