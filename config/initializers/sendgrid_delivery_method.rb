@@ -1,5 +1,5 @@
 # config/initializers/sendgrid_delivery_method.rb
-require "sendgrid-ruby"
+# require "sendgrid-ruby"
 
 class SendGridDeliveryMethod
   include SendGrid
