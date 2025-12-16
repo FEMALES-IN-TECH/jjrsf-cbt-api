@@ -1,6 +1,4 @@
 class CandidateMailer < ApplicationMailer
-  default from: 'no-reply@yourapp.com'  # Set your sender email
-
   def candidate_updated(candidate)
     @candidate = candidate
     @exam = candidate.clacbt_exam
