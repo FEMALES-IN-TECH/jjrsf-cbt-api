@@ -14,15 +14,15 @@ class Api::V1::ClacbtCheckCandidatesController < ApplicationController
   
     # Find candidate (ignoring case for email)
     candidate = exam.clacbt_candidates.find_by("LOWER(email) = ?", params[:email].to_s.downcase)
-  
-    if candidate&.score.nil?
-      render json: { 
-        message: "Candidate authorized", 
+
+    if candidate && candidate.score.nil?
+      render json: {
+        message: "Candidate authorized",
         candidate: {
           id: candidate.id,
-          email: candidate.email, 
-          exam_code: exam.exam_code 
-        } 
+          email: candidate.email,
+          exam_code: exam.exam_code
+        }
       }, status: :ok
     else
       render json: { error: "Unauthorized candidate" }, status: :unauthorized
